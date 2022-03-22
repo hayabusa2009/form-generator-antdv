@@ -26,13 +26,13 @@ export function vueTemplate(str) {
 }
 
 export function vueScript(str) {
-  return `<script>
+  return `<script lang="ts" setup>
     ${str}
   </script>`;
 }
 
 export function cssStyle(cssStr) {
-  return `<style>
+  return `<style lang="less">
     ${cssStr}
   </style>`;
 }
@@ -236,7 +236,7 @@ const tags = {
   "a-auto-complete": (el) => {
     const { tag, disabled, vModel, allowClear, placeholder } = attrBuilder(el);
     const dataSource = el["data-source"]
-      ? `:data-source="${el.__vModel__}DataSource"`
+      ? `:options="${el.__vModel__}DataSource"`
       : "";
     const filterOption = el["filter-option"] ? "filter-option" : "";
     const backfill = el.backfill ? "backfill" : "";

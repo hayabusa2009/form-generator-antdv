@@ -11,7 +11,7 @@
     >
       <a-row :gutter="15">
         <a-form-model
-          ref="elForm"
+          ref="formRef"
           :model="formData"
           :rules="rules"
           size="medium"
@@ -30,8 +30,16 @@
                 </a-radio-button>
               </a-radio-group>
             </a-form-model-item>
-            <a-form-model-item v-if="showFileName" :label="$t('base.filename')" prop="fileName">
-              <a-input v-model="formData.fileName" :placeholder="$t('base.enter')" allow-clear />
+            <a-form-model-item
+              v-if="showFileName"
+              :label="$t('base.filename')"
+              prop="fileName"
+            >
+              <a-input
+                v-model="formData.fileName"
+                :placeholder="$t('base.enter')"
+                allow-clear
+              />
             </a-form-model-item>
           </a-col>
         </a-form-model>
@@ -39,10 +47,10 @@
 
       <div slot="footer">
         <a-button @click="close">
-          {{ $t('base.cancel') }}
+          {{ $t("base.cancel") }}
         </a-button>
         <a-button type="primary" @click="handelConfirm">
-          {{ $t('base.ok') }}
+          {{ $t("base.ok") }}
         </a-button>
       </div>
     </a-modal>
@@ -51,64 +59,68 @@
 <script>
 export default {
   inheritAttrs: false,
-  props: ['showFileName'],
+  props: ["showFileName"],
   data() {
     return {
       formData: {
         fileName: undefined,
-        type: 'file'
-      }
-    }
+        type: "file",
+      },
+    };
   },
   computed: {
     rules() {
       return {
-        fileName: [{
-          required: true,
-          message: `${this.$t('base.enter')}${this.$t('base.filename')}`,
-          trigger: 'blur'
-        }],
-        type: [{
-          required: true,
-          message: this.$t('base.choose.build.type'),
-          trigger: 'change'
-        }]
-      }
+        fileName: [
+          {
+            required: true,
+            message: `${this.$t("base.enter")}${this.$t("base.filename")}`,
+            trigger: "blur",
+          },
+        ],
+        type: [
+          {
+            required: true,
+            message: this.$t("base.choose.build.type"),
+            trigger: "change",
+          },
+        ],
+      };
     },
     typeOptions() {
-      return [{
-        label: this.$t('base.page'),
-        value: 'file'
-      }, {
-        label: this.$t('base.modal'),
-        value: 'dialog'
-      }]
-    }
+      return [
+        {
+          label: this.$t("base.page"),
+          value: "file",
+        },
+        {
+          label: this.$t("base.modal"),
+          value: "dialog",
+        },
+      ];
+    },
   },
   watch: {},
   mounted() {},
   methods: {
     onOpen() {
       if (this.showFileName) {
-        this.formData.fileName = `${+new Date()}.vue`
+        this.formData.fileName = `${+new Date()}.vue`;
       }
     },
-    onClose() {
-    },
+    onClose() {},
     close(e) {
-      this.$emit('update:visible', false)
+      this.$emit("update:visible", false);
     },
     handelConfirm() {
-      this.$refs.elForm.validate(valid => {
-        if (!valid) return
-        this.$emit('confirm', { ...this.formData })
-        this.close()
-      })
-    }
-  }
-}
+      this.$refs.formRef.validate((valid) => {
+        if (!valid) return;
+        this.$emit("confirm", { ...this.formData });
+        this.close();
+      });
+    },
+  },
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
